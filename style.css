@@ -16,7 +16,7 @@ body {
   color: white;
 }
 
-/* ========== HEADER / NAVBAR ========== */
+/* ========== HEADER / NAVBAR (FIXED HEIGHT) ========== */
 header {
   position: fixed;
   top: 0;
@@ -26,7 +26,8 @@ header {
   backdrop-filter: blur(6px) saturate(150%);
   -webkit-backdrop-filter: blur(6px) saturate(150%);
   border-radius: 30px;
-  padding: 12px 40px;
+  /* FIXED VERTICAL PADDING -> fixed height feel */
+  padding: 12px 40px;              /* 12px top/bottom stays same on all devices */
   z-index: 1000;
   box-shadow: 0 8px 20px rgba(0,0,0,0.25);
   border: 1px solid rgba(255, 255, 255, 0.25);
@@ -38,9 +39,10 @@ nav ul {
   justify-content: flex-end;
   align-items: center;
   list-style: none;
-  padding: 20px 40px;
+  padding: 0 40px;                 /* horizontal only */
   margin: 0;
   gap: 20px;
+  height: 32px;                    /* defines inner line area */
 }
 
 nav ul li {
@@ -51,6 +53,8 @@ nav ul li a {
   color: white;
   text-decoration: none;
   font-weight: bold;
+  font-size: 1rem;                 /* base size */
+  padding: 0;                      /* no extra vertical padding -> height stable */
   transition: color 0.3s ease;
 }
 
@@ -63,7 +67,7 @@ main {
   margin: 0;
 }
 
-/* hero takes full viewport; navbar sits above */
+/* hero takes full viewport; navbar sits above it */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -71,14 +75,14 @@ main {
   align-items: center;
   justify-content: center;
   gap: 40px;
-  padding: 120px 50px 40px;        /* 120px to clear navbar */
+  padding: 120px 50px 40px;        /* 120px clears navbar */
   box-sizing: border-box;
   text-align: left;
 }
 
 /* big image */
 .photo {
-  flex: 1.2;                       /* more space than text */
+  flex: 1.2;                       /* more width than text */
   height: 70vh;                    /* tall hero image */
   background-image: url('images/i1.PNG');
   background-size: cover;
@@ -168,25 +172,23 @@ ul li::before {
     padding: 0 8px;
   }
 
-  /* navbar: smaller, single row, no wrap */
+  /* NAV: fixed height, smaller width & font, one row */
   header {
-    padding: 6px 16px;
+    padding: 12px 16px;           /* same vertical, less horizontal */
   }
 
   nav ul {
-    flex-direction: row;       /* stay in one line */
-    flex-wrap: nowrap;         /* prevent wrapping */
+    padding: 0 12px;              /* reduced horizontal padding */
+    gap: 10px;                    /* smaller gaps */
+    flex-wrap: nowrap;            /* prevent wrapping */
     justify-content: center;
-    padding: 8px 12px;
-    gap: 8px;
   }
 
   nav ul li a {
-    font-size: 0.8rem;
-    padding: 4px 6px;
+    font-size: 0.8rem;            /* smaller text */
   }
 
-  /* hero still full-screen, stacked layout */
+  /* hero full-screen, stacked layout */
   .hero {
     flex-direction: column;
     text-align: center;
@@ -213,7 +215,17 @@ ul li::before {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
+  /* even tighter nav text and gaps, height still same */
+  nav ul {
+    padding: 0 8px;
+    gap: 6px;
+  }
+
+  nav ul li a {
+    font-size: 0.7rem;
+  }
+
   .skills-list {
     grid-template-columns: repeat(1, 1fr);
     justify-content: center;
