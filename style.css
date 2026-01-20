@@ -1,46 +1,43 @@
+/* ========== RESET ========== */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
+/* ========== BASE LAYOUT ========== */
+html, body {
+  height: 100%;
+}
+
 body {
-  margin: 0;
-  padding: 0 10px; /* Prevents edge touch issues on mobile */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(to right, #1c1c1c, #000);
   color: white;
 }
 
-main, section {
-  transition: transform 0.6s ease, opacity 0.6s ease;
-}
-
-.shrink-under-glass {
-  transform: scale(0.95);
-  transition: transform 0.4s ease;
-}
-
+/* ========== HEADER / NAVBAR ========== */
 header {
   position: fixed;
-  top: 20px;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(6px) saturate(150%);
   -webkit-backdrop-filter: blur(6px) saturate(150%);
   border-radius: 30px;
-  padding: 12px clamp(20px, 5vw, 40px); /* Responsive padding */
+  padding: 12px 40px;
   z-index: 1000;
   box-shadow: 0 8px 20px rgba(0,0,0,0.25);
   border: 1px solid rgba(255, 255, 255, 0.25);
   overflow: hidden;
-  width: clamp(250px, 90vw, 500px); /* Prevents overflow */
 }
 
 nav ul {
   display: flex;
   justify-content: flex-end;
   list-style: none;
-  padding: 0 clamp(10px, 3vw, 20px); /* Responsive */
+  padding: 20px 40px;
   margin: 0;
 }
 
@@ -59,73 +56,64 @@ nav ul li a:hover {
   color: red;
 }
 
+/* ========== HERO (FULL SCREEN, HUGE IMAGE) ========== */
+main {
+  margin: 0;
+}
+
+/* hero takes full viewport; navbar sits on top */
 .hero {
+  min-height: 100vh;
   display: flex;
-  flex-direction: column; /* Always column on small, but flex for centering */
+  flex-direction: row;             /* desktop: side by side */
   align-items: center;
   justify-content: center;
-  min-height: 100dvh; /* Dynamic full height, better than 100vh on mobile */
-  text-align: center;
-  padding: clamp(80px, 15vh, 120px) 20px 20px; /* Responsive top padding for fixed header */
-  transition: transform 0.6s ease, opacity 0.6s ease;
+  gap: 40px;
+  padding: 120px 50px 40px;        /* 120px to clear navbar */
+  box-sizing: border-box;
+  text-align: left;
 }
 
-.scrolled .hero {
-  transform: translateY(-20px);
-  opacity: 0.9;
-}
-
+/* big image */
 .photo {
-  width: 100%;
-  max-width: 900px;
-  height: clamp(250px, 40vw, 600px);
+  flex: 1.2;                       /* more space than text */
+  height: 70vh;                    /* tall hero image */
   background-image: url('images/i1.PNG');
   background-size: cover;
   background-position: center;
-  margin-bottom: 30px; /* Space below photo */
+  border-radius: 12px;
 }
 
+/* hero text */
 .intro {
+  flex: 1;
   max-width: 600px;
-  width: 100%;
 }
 
 .intro h1 {
-  font-size: clamp(28px, 8vw, 64px);
+  font-size: 64px;
   color: rgb(226, 133, 133);
   text-shadow: 0 0 15px red;
   margin-bottom: 20px;
 }
 
 .intro p {
-  font-size: clamp(16px, 4vw, 24px);
+  font-size: 24px;
   line-height: 1.6;
   color: white;
 }
 
-/* ANIMATIONS */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.intro h1, .intro p {
-  animation: fadeIn 1s ease-out forwards;
-  opacity: 0;
-}
-
-.photo {
-  animation: fadeIn 1.5s ease-out forwards;
-  opacity: 0;
-}
-
-/* Reset some default styles */
+/* ========== SECTION / TEXT STYLES ========== */
 h2 {
   border-bottom: 2px solid #993213;
   padding-bottom: 6px;
-  margin-bottom: 12px;
+  margin: 40px 0 12px;
   color: #993213;
   text-align: center;
+}
+
+section {
+  margin-bottom: 30px;
 }
 
 ul {
@@ -147,10 +135,6 @@ ul li::before {
   color: #993213;
 }
 
-section {
-  margin-bottom: 30px;
-}
-
 .experience-item {
   margin-bottom: 15px;
 }
@@ -160,9 +144,10 @@ section {
   color: #993213;
 }
 
+/* ========== SKILLS GRID ========== */
 .skills-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Auto 1-4 cols responsive */
+  grid-template-columns: repeat(8, 1fr);
   gap: 12px;
 }
 
@@ -175,51 +160,52 @@ section {
   font-size: 0.9rem;
 }
 
-/* Mobile responsive - expanded coverage */
+/* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
+  body {
+    padding: 0 10px;
+  }
+
+  /* hero still full-screen, stacked; big image */
   .hero {
     flex-direction: column;
-    align-items: center;
     text-align: center;
-    padding-top: clamp(100px, 20vh, 120px);
+    padding: 120px 20px 30px;
   }
 
   .photo {
     width: 100%;
-    height: clamp(200px, 50vw, 300px);
-    margin-bottom: 20px;
+    max-width: none;
+    height: 65vh;                  /* big on phones too */
+    margin-bottom: 10px;
+  }
+
+  .intro h1 {
+    font-size: 32px;
+  }
+
+  .intro p {
+    font-size: 16px;
   }
 
   nav ul {
     flex-direction: column;
     align-items: center;
-    gap: 10px; /* Stack with space */
+    padding: 10px 20px;
   }
 
   nav ul li {
-    margin: 5px 0;
-  }
-}
-
-@media (max-width: 480px) {
-  header {
-    top: 10px;
-    padding: 10px 20px;
-    width: 95vw;
-  }
-
-  .hero {
-    min-height: 90dvh;
-    padding: 80px 15px 15px;
+    margin: 10px 0;
   }
 
   .skills-list {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Tighter for tiny screens */
-    gap: 8px;
+    grid-template-columns: repeat(2, 1fr);
   }
+}
 
-  .skill {
-    padding: 6px 12px;
-    font-size: 0.85rem;
+@media (max-width: 600px) {
+  .skills-list {
+    grid-template-columns: repeat(1, 1fr);
+    justify-content: center;
   }
 }
