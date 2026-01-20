@@ -36,13 +36,15 @@ header {
 nav ul {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   list-style: none;
   padding: 20px 40px;
   margin: 0;
+  gap: 20px;
 }
 
 nav ul li {
-  margin-left: 20px;
+  margin: 0;
 }
 
 nav ul li a {
@@ -61,7 +63,7 @@ main {
   margin: 0;
 }
 
-/* hero takes full viewport; navbar sits on top */
+/* hero takes full viewport; navbar sits above */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -163,20 +165,38 @@ ul li::before {
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
   body {
-    padding: 0 10px;
+    padding: 0 8px;
   }
 
-  /* hero still full-screen, stacked; big image */
+  /* navbar: smaller, single row, no wrap */
+  header {
+    padding: 6px 16px;
+  }
+
+  nav ul {
+    flex-direction: row;       /* stay in one line */
+    flex-wrap: nowrap;         /* prevent wrapping */
+    justify-content: center;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  nav ul li a {
+    font-size: 0.8rem;
+    padding: 4px 6px;
+  }
+
+  /* hero still full-screen, stacked layout */
   .hero {
     flex-direction: column;
     text-align: center;
-    padding: 120px 20px 30px;
+    padding: 100px 16px 24px;
   }
 
   .photo {
     width: 100%;
     max-width: none;
-    height: 65vh;                  /* big on phones too */
+    height: 65vh;
     margin-bottom: 10px;
   }
 
@@ -186,16 +206,6 @@ ul li::before {
 
   .intro p {
     font-size: 16px;
-  }
-
-  nav ul {
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 20px;
-  }
-
-  nav ul li {
-    margin: 10px 0;
   }
 
   .skills-list {
