@@ -6,14 +6,20 @@
 }
 
 /* ========== BASE LAYOUT ========== */
-html, body {
+html,
+body {
   height: 100%;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(to right, #1c1c1c, #000);
   color: white;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
 }
 
 /* ========== HEADER / NAVBAR (FIXED HEIGHT) ========== */
@@ -26,8 +32,7 @@ header {
   backdrop-filter: blur(6px) saturate(150%);
   -webkit-backdrop-filter: blur(6px) saturate(150%);
   border-radius: 30px;
-  /* FIXED VERTICAL PADDING -> fixed height feel */
-  padding: 12px 40px;              /* 12px top/bottom stays same on all devices */
+  padding: 12px 40px;
   z-index: 1000;
   box-shadow: 0 8px 20px rgba(0,0,0,0.25);
   border: 1px solid rgba(255, 255, 255, 0.25);
@@ -39,10 +44,10 @@ nav ul {
   justify-content: flex-end;
   align-items: center;
   list-style: none;
-  padding: 0 40px;                 /* horizontal only */
+  padding: 0 40px;
   margin: 0;
   gap: 20px;
-  height: 32px;                    /* defines inner line area */
+  height: 32px;
 }
 
 nav ul li {
@@ -53,8 +58,8 @@ nav ul li a {
   color: white;
   text-decoration: none;
   font-weight: bold;
-  font-size: 1rem;                 /* base size */
-  padding: 0;                      /* no extra vertical padding -> height stable */
+  font-size: 1rem;
+  padding: 0;
   transition: color 0.3s ease;
 }
 
@@ -62,35 +67,33 @@ nav ul li a:hover {
   color: red;
 }
 
-/* ========== HERO (FULL SCREEN, HUGE IMAGE) ========== */
+/* ========== HERO (FIRST SECTION) ========== */
 main {
   margin: 0;
 }
 
-/* hero takes full viewport; navbar sits above it */
 .hero {
   min-height: 100vh;
+  scroll-snap-align: start;
   display: flex;
-  flex-direction: row;             /* desktop: side by side */
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 40px;
-  padding: 120px 50px 40px;        /* 120px clears navbar */
+  padding: 120px 50px 40px;   /* 120px clears navbar */
   box-sizing: border-box;
   text-align: left;
 }
 
-/* big image */
 .photo {
-  flex: 1.2;                       /* more width than text */
-  height: 70vh;                    /* tall hero image */
+  flex: 1.2;
+  height: 70vh;
   background-image: url('images/i1.PNG');
   background-size: cover;
   background-position: center;
   border-radius: 12px;
 }
 
-/* hero text */
 .intro {
   flex: 1;
   max-width: 600px;
@@ -109,17 +112,20 @@ main {
   color: white;
 }
 
-/* ========== SECTION / TEXT STYLES ========== */
+/* ========== GENERIC SECTIONS ========== */
+section {
+  min-height: 100vh;          /* one screen each, can grow if needed */
+  scroll-snap-align: start;
+  padding: 120px 40px 40px;   /* top clear header */
+  box-sizing: border-box;
+}
+
 h2 {
   border-bottom: 2px solid #993213;
   padding-bottom: 6px;
-  margin: 40px 0 12px;
+  margin: 0 0 24px;
   color: #993213;
   text-align: center;
-}
-
-section {
-  margin-bottom: 30px;
 }
 
 ul {
@@ -150,20 +156,41 @@ ul li::before {
   color: #993213;
 }
 
-/* ========== SKILLS GRID ========== */
-.skills-list {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 12px;
+/* ========== SKILLS SECTIONS (VERTICAL, FULL-WIDTH ROWS) ========== */
+/* Software Skills (#about) and What Can I Do? (anonymous section with .skills-list) */
+
+#about,
+section .skills-list:only-child {
+  display: flex;
+  flex-direction: column;
 }
 
+/* generic skills-list layout: fills remaining height and splits equally */
+.skills-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;         /* vertical stack */
+  justify-content: space-between; /* equal vertical distribution */
+  gap: 12px;
+  width: 100%;
+}
+
+/* each skill is a full-width bordered pill row */
 .skill {
+  flex:auto;                        /* equal height rows inside the section */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+
   background-color: #1e1e1e;
-  padding: 8px 14px;
   border-radius: 20px;
-  color: #993213;
+  border: 1px solid #993213;
+  color: #ffffff;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 0 16px;
 }
 
 /* ========== RESPONSIVE ========== */
@@ -172,23 +199,21 @@ ul li::before {
     padding: 0 8px;
   }
 
-  /* NAV: fixed height, smaller width & font, one row */
   header {
-    padding: 12px 16px;           /* same vertical, less horizontal */
+    padding: 12px 16px;
   }
 
   nav ul {
-    padding: 0 12px;              /* reduced horizontal padding */
-    gap: 10px;                    /* smaller gaps */
-    flex-wrap: nowrap;            /* prevent wrapping */
+    padding: 0 12px;
+    gap: 10px;
+    flex-wrap: nowrap;
     justify-content: center;
   }
 
   nav ul li a {
-    font-size: 0.8rem;            /* smaller text */
+    font-size: 0.8rem;
   }
 
-  /* hero full-screen, stacked layout */
   .hero {
     flex-direction: column;
     text-align: center;
@@ -210,13 +235,12 @@ ul li::before {
     font-size: 16px;
   }
 
-  .skills-list {
-    grid-template-columns: repeat(2, 1fr);
+  .skill {
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  /* even tighter nav text and gaps, height still same */
   nav ul {
     padding: 0 8px;
     gap: 6px;
@@ -227,7 +251,12 @@ ul li::before {
   }
 
   .skills-list {
-    grid-template-columns: repeat(1, 1fr);
-    justify-content: center;
+    gap: 8px;
+  }
+
+  .skill {
+    font-size: 0.9rem;
+    border-radius: 16px;
+    padding: 0 12px;
   }
 }
